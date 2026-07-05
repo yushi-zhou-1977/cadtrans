@@ -43,10 +43,16 @@ export async function onRequestPost(context) {
             return jsonResponse({ success: false, message: '请选择文件' });
         }
 
+        // Accept zip and dll files
+        const filename = file.name.toLowerCase();
+        if (!filename.endsWith('.zip') && !filename.endsWith('.dll')) {
+            return jsonResponse({ success: false, message: '仅支持 .zip 或 .dll 文件' });
+        }
+
         const arrayBuffer = await file.arrayBuffer();
 
-        // Store the DLL binary
-        await env.LICENSES_KV.put('cadtrans_dll', arrayBuffer);
+        // Store the file binary
+        await env.LICENSES_KV.put('cadtrans_file', arrayBuffer);
 
         // Store metadata
         const metadata = {
@@ -57,7 +63,7 @@ export async function onRequestPost(context) {
             uploadDate: new Date().toISOString(),
             contentType: file.type || 'application/octet-stream'
         };
-        await env.LICENSES_KV.put('cadtrans_dll_meta', JSON.stringify(metadata));
+        await env.LICENSES_KV.put('cadtrans_file_meta', JSON.stringify(metadata));
 
         return jsonResponse({
             success: true,
@@ -78,7 +84,7 @@ export async function onRequestGet(context) {
     }
 
     try {
-        const metaStr = await env.LICENSES_KV.get('cadtrans_dll_meta');
+        const metaStr = await env.LICENSES_KV.get('cadtrans_file_meta');
         if (!metaStr) {
             return jsonResponse({ success: true, metadata: null });
         }
@@ -86,5 +92,26 @@ export async function onRequestGet(context) {
         return jsonResponse({ success: true, metadata });
     } catch (err) {
         return jsonResponse({ success: false, message: '获取信息失败' });
+    }
+}
+
+// DELETE: remove uploaded file (admin only)
+export async function onRequestDelete(context) {
+    const { request, env } = context;
+
+    if (!authenticate(request)) {
+        return jsonResponse({ success: false, message: '未授权' }, 401);
+    }
+
+    if (!env.LICENSES_KV) {
+        return jsonResponse({ success: false, message: 'KV命名空间未绑定' });
+    }
+
+    try {
+        await env.LICENSES_KV.delete('cadtrans_file');
+        await env.LICENSES_KV.delete('cadtrans_file_meta');
+        return jsonResponse({ success: true, message: '文件已删除' });
+    } catch (err) {
+        return jsonResponse({ success: false, message: '删除失败: ' + err.message });
     }
 }

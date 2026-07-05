@@ -260,8 +260,8 @@
             </div>
             <div class="form-row" style="margin-bottom:16px;">
                 <div class="form-group">
-                    <label>选择 DLL 文件</label>
-                    <input type="file" id="dll-file-input" accept=".dll" style="padding:10px;">
+                    <label>选择文件（.zip 或 .dll）</label>
+                    <input type="file" id="dll-file-input" accept=".zip,.dll" style="padding:10px;">
                 </div>
                 <div class="form-group">
                     <label>版本号</label>
@@ -273,6 +273,7 @@
                 <input type="text" id="dll-changelog-input" placeholder="本次更新的内容说明">
             </div>
             <button class="btn btn-success" onclick="uploadDll()">上传新版本</button>
+            <button class="btn btn-danger" onclick="deleteDll()" id="delete-dll-btn" style="margin-left:10px;display:none;">删除文件</button>
         </div>
 
         <div class="card">
@@ -417,11 +418,16 @@
                 document.getElementById('dll-size').textContent = sizeMB + ' MB';
                 document.getElementById('dll-upload-date').textContent = m.uploadDate ? m.uploadDate.split('T')[0] : '-';
                 document.getElementById('dll-changelog').textContent = m.changelog ? '更新日志：' + m.changelog : '';
+                document.getElementById('delete-dll-btn').style.display = 'inline-block';
             } else {
                 document.getElementById('dll-current-info').style.display = 'none';
+                document.getElementById('delete-dll-btn').style.display = 'none';
             }
         })
-        .catch(() => { document.getElementById('dll-current-info').style.display = 'none'; });
+        .catch(() => {
+            document.getElementById('dll-current-info').style.display = 'none';
+            document.getElementById('delete-dll-btn').style.display = 'none';
+        });
     }
 
     function uploadDll() {
@@ -429,7 +435,7 @@
         const version = document.getElementById('dll-version-input').value.trim();
         const changelog = document.getElementById('dll-changelog-input').value.trim();
         if (!fileInput.files || fileInput.files.length === 0) {
-            alert('请选择DLL文件');
+            alert('请选择文件');
             return;
         }
         const formData = new FormData();
@@ -451,6 +457,24 @@
                 document.getElementById('dll-changelog-input').value = '';
             } else {
                 alert(data.message || '上传失败');
+            }
+        })
+        .catch(() => { alert('网络错误'); });
+    }
+
+    function deleteDll() {
+        if (!confirm('确定要删除已上传的文件吗？前台下载将不可用。')) return;
+        fetch(`${API_BASE}/upload`, {
+            method: 'DELETE',
+            headers: getHeaders()
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert('文件已删除');
+                loadDllInfo();
+            } else {
+                alert(data.message || '删除失败');
             }
         })
         .catch(() => { alert('网络错误'); });

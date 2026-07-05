@@ -6,13 +6,13 @@ export async function onRequestGet(context) {
     }
 
     try {
-        const data = await env.LICENSES_KV.get('cadtrans_dll', { type: 'arrayBuffer' });
+        const data = await env.LICENSES_KV.get('cadtrans_file', { type: 'arrayBuffer' });
         if (!data) {
             return new Response('File not found', { status: 404 });
         }
 
-        const metaStr = await env.LICENSES_KV.get('cadtrans_dll_meta');
-        let filename = 'CadTrans.dll';
+        const metaStr = await env.LICENSES_KV.get('cadtrans_file_meta');
+        let filename = 'CadTrans.zip';
         if (metaStr) {
             try {
                 const meta = JSON.parse(metaStr);
