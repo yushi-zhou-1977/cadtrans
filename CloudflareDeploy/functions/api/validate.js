@@ -1,6 +1,6 @@
 const ADMIN_USERNAME = 'admin';
-const ADMIN_PASSWORD = 'your_admin_password_here';
-const JWT_SECRET = 'your_jwt_secret_here_must_be_long_and_random';
+const ADMIN_PASSWORD = '13621977041@iloveyou';
+const JWT_SECRET = 'c6c8c5abcae0442ebc2a2231e47c7d555ec2443af38e40689546e227f31b1531';
 
 function generateLicenseKey() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
