@@ -509,6 +509,27 @@
         }
         .btn-cta:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
 
+        /* ===== CONTACT ===== */
+        #contact { background: white; }
+        .qr-card {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: var(--warm-50);
+            padding: 32px 40px; border-radius: 20px;
+            border: 1px solid rgba(0,0,0,0.06);
+            width: fit-content; margin: 0 auto;
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
+        }
+        .qr-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        .qr-img {
+            width: 200px; height: 200px; object-fit: cover;
+            border-radius: 12px; display: block; margin-bottom: 16px;
+        }
+        .qr-title { color: var(--deep-600); font-weight: 600; }
+        .qr-subtitle { color: var(--deep-400); font-size: 0.85rem; margin-top: 4px; }
+
         /* ===== FAQ ===== */
         #faq { background: var(--warm-50); }
         .faq-list { max-width: 720px; }
@@ -901,10 +922,10 @@
             <h2 class="section-title">添加微信，获取密钥</h2>
             <p class="section-desc" style="margin:0 auto 32px;">扫描下方二维码添加微信，转账后即可获得许可证密钥。</p>
         </div>
-        <div class="reveal" style="display:inline-block;background:var(--warm-50);padding:32px;border-radius:20px;border:1px solid rgba(0,0,0,0.06);">
-            <img src="assets/二维码.jpg" alt="微信二维码" style="width:200px;height:200px;object-fit:cover;border-radius:12px;display:block;margin-bottom:16px;">
-            <p style="color:var(--deep-600);font-weight:600;">扫描添加微信</p>
-            <p style="color:var(--deep-400);font-size:0.85rem;margin-top:4px;">流程：添加微信 → 告知需求 → 转账 → 发送密钥</p>
+        <div class="reveal qr-card">
+            <img src="assets/二维码.jpg" alt="微信二维码" class="qr-img">
+            <p class="qr-title">扫描添加微信</p>
+            <p class="qr-subtitle">流程：添加微信 → 告知需求 → 转账 → 发送密钥</p>
         </div>
     </div>
 </section>
