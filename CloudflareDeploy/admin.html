@@ -101,11 +101,15 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>机器指纹码（必填，由用户提供）</label>
-                        <input type="text" id="fingerprint-input" placeholder="用户在CAD插件中显示的指纹码" style="font-family: monospace;">
+                        <label>用户邮箱（50K套餐必填）</label>
+                        <input type="email" id="email-input" placeholder="用户邮箱地址">
                     </div>
                 </div>
                 <div class="form-row">
+                    <div class="form-group">
+                        <label>机器指纹码（必填，由用户提供）</label>
+                        <input type="text" id="fingerprint-input" placeholder="用户在CAD插件中显示的指纹码" style="font-family: monospace;">
+                    </div>
                     <div class="form-group">
                         <label>备注</label>
                         <input type="text" id="note-input" placeholder="用户备注信息">
@@ -125,6 +129,7 @@
                             <th>额度</th>
                             <th>有效期至</th>
                             <th>状态</th>
+                            <th>邮箱</th>
                             <th>绑定机器</th>
                             <th>备注</th>
                             <th>操作</th>
@@ -146,9 +151,21 @@
         </div>
     </div>
 
+    <div class="modal" id="delete-modal">
+        <div class="modal-content">
+            <h3>删除许可证</h3>
+            <p style="color:#c0392b;margin-bottom:16px;">警告：此操作不可恢复！许可证将被永久删除。</p>
+            <p>请输入密钥后6位以确认删除：<span id="delete-key-hint" style="font-family:monospace;font-weight:bold;"></span></p>
+            <input type="text" id="delete-confirm-input" placeholder="输入密钥后6位" style="width:100%;padding:10px;margin:10px 0;border:2px solid #ddd;border-radius:6px;font-family:monospace;">
+            <button class="btn btn-danger" onclick="confirmDelete()">确认删除</button>
+            <button class="btn" style="margin-left:10px;background:#ccc;" onclick="closeDeleteModal()">取消</button>
+        </div>
+    </div>
+
     <script>
         const API_BASE = '/api';
         let currentResetKey = '';
+        let currentDeleteKey = '';
 
         function login() {
             const username = document.getElementById('username').value;
@@ -219,17 +236,22 @@
                         const tr = document.createElement('tr');
                         const typeLabel = typeLabels[lic.type] || lic.type || '旧版';
                         const quotaLabel = lic.dailyQuota ? (lic.dailyQuota >= 50000 ? '5万/天' : '5千/天') : '-';
+                        const statusColor = lic.status === 'active' ? '#28a745' : '#dc3545';
+                        const statusText = lic.status === 'active' ? '活跃' : '已禁用';
+                        const fpDisplay = lic.fingerprint ? (lic.fingerprint.length > 12 ? lic.fingerprint.substring(0, 12) + '...' : lic.fingerprint) : '未绑定';
                         tr.innerHTML = `
                             <td style="font-family: monospace;">${lic.key}</td>
                             <td>${typeLabel}</td>
                             <td>${quotaLabel}</td>
                             <td>${lic.expireDate}</td>
-                            <td><span style="color: ${lic.status === 'active' ? '#28a745' : '#dc3545'}">${lic.status === 'active' ? '活跃' : '已禁用'}</span></td>
-                            <td>${lic.fingerprint || '未绑定'}</td>
+                            <td><span style="color: ${statusColor}">${statusText}</span></td>
+                            <td style="color:#1a3a2a;">${lic.email || '-'}</td>
+                            <td style="font-family:monospace;font-size:0.85em;">${fpDisplay}</td>
                             <td>${lic.note || '-'}</td>
                             <td>
-                                <button class="btn btn-warning btn-sm" onclick="showResetModal('${lic.key}')" style="margin-right:5px;">重置绑定</button>
-                                <button class="btn btn-danger btn-sm" onclick="disableKey('${lic.key}')">禁用</button>
+                                <button class="btn btn-warning btn-sm" onclick="showResetModal('${lic.key}')" style="margin-right:3px;margin-bottom:3px;">重置</button>
+                                <button class="btn btn-danger btn-sm" onclick="disableKey('${lic.key}')" style="margin-right:3px;margin-bottom:3px;">禁用</button>
+                                <button class="btn btn-sm" onclick="showDeleteModal('${lic.key}')" style="background:#6c757d;color:white;margin-bottom:3px;">删除</button>
                             </td>
                         `;
                         tbody.appendChild(tr);
@@ -242,14 +264,19 @@
             const type = document.getElementById('type-select').value;
             const note = document.getElementById('note-input').value;
             const fingerprint = document.getElementById('fingerprint-input').value.trim();
+            const email = document.getElementById('email-input').value.trim();
             if (!fingerprint) {
                 alert('请输入用户提供的机器指纹码');
+                return;
+            }
+            if ((type === 'daily_50k' || type === 'monthly_50k' || type === 'yearly_50k') && !email) {
+                alert('50K套餐必须填写用户邮箱');
                 return;
             }
             fetch(`${API_BASE}/generate`, {
                 method: 'POST',
                 headers: getHeaders(),
-                body: JSON.stringify({ type, note, fingerprint })
+                body: JSON.stringify({ type, note, fingerprint, email })
             })
             .then(res => res.json())
             .then(data => {
@@ -260,12 +287,13 @@
                         yearly_5k: '年卡-5K', yearly_50k: '年卡-50K'
                     };
                     const display = document.getElementById('generated-key');
-                    display.textContent = `新许可证密钥：${data.key}\n类型：${typeLabels[data.type] || data.type}\n额度：${data.dailyQuota >= 50000 ? '5万' : '5千'}字符/天\n有效期至：${data.expireDate}`;
+                    display.textContent = `新许可证密钥：${data.key}\n类型：${typeLabels[data.type] || data.type}\n额度：${data.dailyQuota >= 50000 ? '5万' : '5千'}字符/天\n邮箱：${email || '未填写'}\n有效期至：${data.expireDate}`;
                     display.style.display = 'block';
                     loadStats();
                     loadLicenses();
                     document.getElementById('note-input').value = '';
                     document.getElementById('fingerprint-input').value = '';
+                    document.getElementById('email-input').value = '';
                 } else {
                     alert(data.message || '生成失败');
                 }
@@ -315,6 +343,44 @@
                 } else {
                     alert(data.message || '禁用失败');
                 }
+            });
+        }
+
+        function showDeleteModal(key) {
+            currentDeleteKey = key;
+            document.getElementById('delete-key-hint').textContent = '...-' + key.slice(-6);
+            document.getElementById('delete-confirm-input').value = '';
+            document.getElementById('delete-modal').style.display = 'flex';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('delete-modal').style.display = 'none';
+            currentDeleteKey = '';
+            document.getElementById('delete-confirm-input').value = '';
+        }
+
+        function confirmDelete() {
+            const confirmValue = document.getElementById('delete-confirm-input').value.trim();
+            const expected = currentDeleteKey.slice(-6);
+            if (confirmValue !== expected) {
+                alert('输入的密钥后6位不正确，请重新输入');
+                return;
+            }
+            fetch(`${API_BASE}/delete`, {
+                method: 'POST',
+                headers: getHeaders(),
+                body: JSON.stringify({ key: currentDeleteKey })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('删除成功');
+                    loadStats();
+                    loadLicenses();
+                } else {
+                    alert(data.message || '删除失败');
+                }
+                closeDeleteModal();
             });
         }
 

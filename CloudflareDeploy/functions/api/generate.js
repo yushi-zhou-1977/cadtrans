@@ -64,6 +64,7 @@ export async function onRequestPost(context) {
             const type = body.type || '';
             const note = body.note || '';
             const fingerprint = body.fingerprint || '';
+            const email = (body.email || '').trim();
             let days, dailyQuota;
 
             if (!fingerprint) {
@@ -95,9 +96,11 @@ export async function onRequestPost(context) {
                 expireDate: expireDate.toISOString().split('T')[0],
                 status: 'active',
                 fingerprint,
+                email,
                 note,
                 type: type || 'legacy',
-                dailyQuota
+                dailyQuota,
+                createdAt: new Date().toISOString()
             };
             await saveLicensesData(env, licenses);
             return jsonResponse({ success: true, key, expireDate: licenses[key].expireDate, type: type || 'legacy', dailyQuota });
