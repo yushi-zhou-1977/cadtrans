@@ -716,9 +716,12 @@
         <div class="steps-track">
             <div class="step-card reveal">
                 <div class="step-num">1</div>
-                <h3>加载插件</h3>
-                <p>在CAD中输入NETLOAD命令，选择CadTrans.dll文件</p>
+                <h3>下载并加载插件</h3>
+                <p>下载CadTrans.dll，在CAD中输入NETLOAD命令加载</p>
                 <span class="step-cmd">NETLOAD → CadTrans.dll</span>
+                <a href="/api/download" class="download-btn" id="hero-download-btn" style="margin-top:12px;display:inline-flex;align-items:center;gap:6px;padding:8px 20px;background:linear-gradient(135deg,var(--emerald-600),var(--emerald-700));color:white;text-decoration:none;border-radius:8px;font-size:0.85rem;font-weight:600;transition:all 0.3s;">
+                    <span>&#11015;</span> 下载 CadTrans.dll
+                </a>
             </div>
             <div class="step-card reveal">
                 <div class="step-num">2</div>
@@ -733,7 +736,21 @@
                 <span class="step-cmd">快速翻译 / 完整翻译</span>
             </div>
         </div>
-        <div class="reveal" style="margin-top:48px;text-align:center;">
+	        <div class="reveal" style="margin-top:40px;">
+	            <div id="download-banner" style="background:linear-gradient(135deg,var(--deep-800),#0f172a);border-radius:20px;padding:32px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+	                <div>
+	                    <h3 style="color:white;font-size:1.3rem;font-weight:700;margin-bottom:6px;">下载 CadTrans 插件</h3>
+	                    <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;" id="download-meta-text">获取最新版本，加载即可使用</p>
+	                </div>
+	                <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+	                    <span id="download-info" style="color:rgba(255,255,255,0.5);font-size:0.82rem;display:none;"></span>
+	                    <a href="/api/download" style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:linear-gradient(135deg,var(--warm-400),var(--warm-600));color:white;text-decoration:none;border-radius:12px;font-weight:700;font-size:1rem;box-shadow:0 4px 20px rgba(232,135,58,0.4);transition:all 0.3s;">
+	                        <span style="font-size:1.2rem;">&#11015;</span> 下载 DLL 文件
+	                    </a>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="reveal" style="margin-top:48px;text-align:center;">
             <div style="display:inline-block;background:var(--deep-800);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.15);position:relative;max-width:600px;width:100%;">
                 <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:#0f172a;">
                     <span style="width:10px;height:10px;border-radius:50%;background:#ef4444;"></span>
@@ -992,6 +1009,19 @@ const revealObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.15 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// Fetch download metadata
+fetch('/api/upload').then(r=>r.json()).then(d=>{
+    if(d.success && d.metadata){
+        const m=d.metadata;
+        const sizeMB=(m.size/1024/1024).toFixed(1);
+        const date=m.uploadDate?m.uploadDate.split('T')[0]:'';
+        const infoEl=document.getElementById('download-info');
+        const textEl=document.getElementById('download-meta-text');
+        if(infoEl){infoEl.textContent=`v${m.version||''} | ${sizeMB}MB | ${date}`;infoEl.style.display='inline';}
+        if(textEl){textEl.textContent=`${m.version?'版本 '+m.version+' | ':''}大小 ${sizeMB}MB${date?' | 更新于 '+date:''}`;}
+    }
+}).catch(()=>{});
 
 // Language search filter
 function filterLangs() {
