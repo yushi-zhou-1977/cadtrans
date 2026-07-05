@@ -22,15 +22,6 @@ function authenticate(request) {
     return verifyToken(token.replace('Bearer ', ''));
 }
 
-async function getLicensesData(env) {
-    try {
-        const data = await env.LICENSES_KV.get('cadtrans_licenses');
-        return data ? JSON.parse(data) : {};
-    } catch {
-        return {};
-    }
-}
-
 export async function onRequestGet(context) {
     const { request, env } = context;
 
@@ -42,21 +33,16 @@ export async function onRequestGet(context) {
         return jsonResponse({ success: false, message: 'KV命名空间未绑定，请在Cloudflare设置中绑定LICENSES_KV' });
     }
 
-    const url = new URL(request.url);
-    const path = url.pathname;
+    try {
+        const data = await env.LICENSES_KV.get('cadtrans_licenses');
+        const licenses = data ? JSON.parse(data) : {};
 
-    const licenses = await getLicensesData(env);
-
-    if (path === '/api/licenses') {
-        return jsonResponse({ success: true, licenses: Object.values(licenses) });
-    }
-
-    if (path === '/api/stats') {
         const total = Object.keys(licenses).length;
         const active = Object.values(licenses).filter(l => l.status === 'active' && new Date() <= new Date(l.expireDate)).length;
         const expired = Object.values(licenses).filter(l => l.status !== 'active' || new Date() > new Date(l.expireDate)).length;
-        return jsonResponse({ success: true, total, active, expired });
-    }
 
-    return jsonResponse({ success: false, message: '未知操作' }, 404);
+        return jsonResponse({ success: true, total, active, expired });
+    } catch (e) {
+        return jsonResponse({ success: false, message: '查询失败: ' + e.message });
+    }
 }

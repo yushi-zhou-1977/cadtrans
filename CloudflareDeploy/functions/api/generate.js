@@ -51,6 +51,10 @@ export async function onRequestPost(context) {
         return jsonResponse({ success: false, message: '未授权' }, 401);
     }
 
+    if (!env.LICENSES_KV) {
+        return jsonResponse({ success: false, message: 'KV命名空间未绑定，请在Cloudflare设置中绑定LICENSES_KV' });
+    }
+
     try {
         const body = await request.json();
         const path = new URL(request.url).pathname;
