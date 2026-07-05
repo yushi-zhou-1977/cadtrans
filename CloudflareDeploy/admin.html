@@ -6,46 +6,46 @@
     <title>CadTrans - 管理员后台</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Microsoft YaHei', sans-serif; background: #f5f7fa; min-height: 100vh; }
-        .login-container { display: flex; align-items: center; justify-content: center; height: 100vh; }
-        .login-box { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 400px; }
-        .login-box h2 { text-align: center; color: #333; margin-bottom: 30px; font-size: 1.8rem; }
+        body { font-family: 'Microsoft YaHei', sans-serif; background: #f0ece4; min-height: 100vh; }
+        .login-container { display: flex; align-items: center; justify-content: center; height: 100vh; background: linear-gradient(135deg, #1a3a2a 0%, #2d5a3f 100%); }
+        .login-box { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); width: 400px; }
+        .login-box h2 { text-align: center; color: #1a3a2a; margin-bottom: 30px; font-size: 1.8rem; }
         .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; color: #666; font-weight: bold; }
-        .form-group input, .form-group select { width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; }
-        .form-group input:focus, .form-group select:focus { border-color: #667eea; outline: none; }
+        .form-group label { display: block; margin-bottom: 8px; color: #555; font-weight: bold; }
+        .form-group input, .form-group select { width: 100%; padding: 12px 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus { border-color: #c8a45a; outline: none; }
         .btn { width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; }
-        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4); }
-        .btn-success { background: #28a745; color: white; }
-        .btn-success:hover { background: #218838; }
-        .btn-danger { background: #dc3545; color: white; }
-        .btn-danger:hover { background: #c82333; }
-        .btn-warning { background: #ffc107; color: #333; }
-        .btn-warning:hover { background: #e0a800; }
+        .btn-primary { background: linear-gradient(135deg, #c8a45a 0%, #a8883e 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(200, 164, 90, 0.4); }
+        .btn-success { background: #2d5a3f; color: white; }
+        .btn-success:hover { background: #1a3a2a; }
+        .btn-danger { background: #c0392b; color: white; }
+        .btn-danger:hover { background: #a93226; }
+        .btn-warning { background: #c8a45a; color: white; }
+        .btn-warning:hover { background: #a8883e; }
         .btn-sm { padding: 10px 25px; font-size: 1rem; display: inline-block; width: auto; }
-        .error { color: #dc3545; margin-top: 10px; text-align: center; }
+        .error { color: #c0392b; margin-top: 10px; text-align: center; }
         .dashboard { display: none; }
-        .dashboard-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .dashboard-header { background: linear-gradient(135deg, #1a3a2a 0%, #2d5a3f 100%); color: white; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; }
         .dashboard-header h1 { font-size: 1.5rem; }
         .dashboard-header .logout-btn { background: rgba(255,255,255,0.2); color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-size: 0.9rem; cursor: pointer; }
         .dashboard-header .logout-btn:hover { background: rgba(255,255,255,0.3); }
         .dashboard-content { padding: 30px; max-width: 1200px; margin: 0 auto; }
         .card { background: white; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .card h3 { color: #333; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #667eea; }
+        .card h3 { color: #1a3a2a; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #c8a45a; }
         .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         table th, table td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
-        table th { background: #f8f9fa; font-weight: bold; color: #333; }
-        table tr:hover { background: #f8f9fa; }
-        .key-display { background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 1.1rem; text-align: center; margin: 15px 0; word-break: break-all; white-space: pre-wrap; }
+        table th { background: #f5f1ea; font-weight: bold; color: #1a3a2a; }
+        table tr:hover { background: #f5f1ea; }
+        .key-display { background: #1a3a2a; color: #e2e8f0; padding: 15px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 1.1rem; text-align: center; margin: 15px 0; word-break: break-all; white-space: pre-wrap; }
         .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px; }
         .stat-item { background: white; border-radius: 12px; padding: 25px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .stat-item .number { font-size: 2.5rem; color: #667eea; font-weight: bold; }
+        .stat-item .number { font-size: 2.5rem; color: #c8a45a; font-weight: bold; }
         .stat-item .label { color: #666; margin-top: 5px; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000; }
         .modal-content { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 500px; }
-        .modal-content h3 { margin-bottom: 20px; }
+        .modal-content h3 { margin-bottom: 20px; color: #1a3a2a; }
     </style>
 </head>
 <body>
