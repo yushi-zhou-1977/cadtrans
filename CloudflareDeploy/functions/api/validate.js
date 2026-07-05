@@ -76,13 +76,8 @@ export async function onRequestGet(context) {
         return jsonResponse({ valid: false, message: '许可证已过期' });
     }
 
-    if (license.fingerprint && license.fingerprint !== fingerprint) {
-        return jsonResponse({ valid: false, message: '机器指纹不匹配' });
-    }
-
-    if (!license.fingerprint) {
-        license.fingerprint = fingerprint;
-        await saveLicensesData(env, licenses);
+    if (license.fingerprint !== fingerprint) {
+        return jsonResponse({ valid: false, message: '机器指纹不匹配，此密钥已绑定其他电脑' });
     }
 
     // 旧记录迁移：缺少type/dailyQuota时自动补充

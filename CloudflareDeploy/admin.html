@@ -101,6 +101,12 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label>机器指纹码（必填，由用户提供）</label>
+                        <input type="text" id="fingerprint-input" placeholder="用户在CAD插件中显示的指纹码" style="font-family: monospace;">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
                         <label>备注</label>
                         <input type="text" id="note-input" placeholder="用户备注信息">
                     </div>
@@ -235,10 +241,15 @@
         function generateKey() {
             const type = document.getElementById('type-select').value;
             const note = document.getElementById('note-input').value;
+            const fingerprint = document.getElementById('fingerprint-input').value.trim();
+            if (!fingerprint) {
+                alert('请输入用户提供的机器指纹码');
+                return;
+            }
             fetch(`${API_BASE}/generate`, {
                 method: 'POST',
                 headers: getHeaders(),
-                body: JSON.stringify({ type, note })
+                body: JSON.stringify({ type, note, fingerprint })
             })
             .then(res => res.json())
             .then(data => {
@@ -254,6 +265,7 @@
                     loadStats();
                     loadLicenses();
                     document.getElementById('note-input').value = '';
+                    document.getElementById('fingerprint-input').value = '';
                 } else {
                     alert(data.message || '生成失败');
                 }

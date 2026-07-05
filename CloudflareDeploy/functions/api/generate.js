@@ -63,7 +63,12 @@ export async function onRequestPost(context) {
         if (path === '/api/generate') {
             const type = body.type || '';
             const note = body.note || '';
+            const fingerprint = body.fingerprint || '';
             let days, dailyQuota;
+
+            if (!fingerprint) {
+                return jsonResponse({ success: false, message: '请输入机器指纹码' });
+            }
 
             if (type && LICENSE_TYPES[type]) {
                 // 新版：通过type查表获取days和dailyQuota
@@ -89,7 +94,7 @@ export async function onRequestPost(context) {
                 key,
                 expireDate: expireDate.toISOString().split('T')[0],
                 status: 'active',
-                fingerprint: '',
+                fingerprint,
                 note,
                 type: type || 'legacy',
                 dailyQuota
