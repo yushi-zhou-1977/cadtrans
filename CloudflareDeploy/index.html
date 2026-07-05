@@ -5,219 +5,1001 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CadTrans - CAD多国语言翻译插件</title>
     <meta name="description" content="CadTrans - 专业CAD多国语言翻译插件，支持越南语、印尼语、英语等11种语言互译">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --warm-50: #fef9f3;
+            --warm-100: #fdf0e3;
+            --warm-200: #fbe0c4;
+            --warm-300: #f7c899;
+            --warm-400: #f0a563;
+            --warm-500: #e8873a;
+            --warm-600: #d4692a;
+            --warm-700: #b04f22;
+            --warm-800: #8c3e1f;
+            --warm-900: #6b311c;
+            --deep-800: #1e293b;
+            --deep-700: #334155;
+            --deep-600: #475569;
+            --deep-500: #64748b;
+            --deep-400: #94a3b8;
+            --emerald-600: #059669;
+            --emerald-700: #047857;
+            --emerald-800: #065f46;
+            --amber-500: #f59e0b;
+            --amber-600: #d97706;
+            --rose-500: #f43f5e;
+            --sky-500: #0ea5e9;
+            --violet-500: #8b5cf6;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; background: linear-gradient(135deg, #1a3a2a 0%, #2d5a3f 50%, #1a3a2a 100%); min-height: 100vh; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .header { text-align: center; color: white; padding: 60px 20px; }
-        .header h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-        .header p { font-size: 1.2rem; opacity: 0.9; }
-        .card { background: white; border-radius: 16px; padding: 30px; margin: 20px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
-        .card h2 { color: #1a3a2a; font-size: 1.5rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #c8a45a; }
-        .card p { color: #666; line-height: 1.8; margin-bottom: 15px; font-size: 1rem; }
-        .feature-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .feature-item { background: #f5f1ea; border-radius: 12px; padding: 25px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; }
-        .feature-item:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .feature-item span { font-size: 3rem; color: #2d5a3f; margin-bottom: 15px; display: block; }
-        .feature-item h3 { color: #1a3a2a; margin-bottom: 10px; }
-        .feature-item p { color: #666; font-size: 0.9rem; }
-        .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .pricing-card { background: white; border-radius: 16px; padding: 40px; text-align: center; position: relative; overflow: hidden; }
-        .pricing-card.best { border: 3px solid #c8a45a; transform: scale(1.05); }
-        .pricing-card.best .badge { position: absolute; top: 0; right: 0; background: #c8a45a; color: white; padding: 8px 20px; font-size: 0.8rem; border-radius: 0 0 0 12px; }
-        .pricing-card h3 { font-size: 1.5rem; color: #1a3a2a; margin-bottom: 10px; }
-        .pricing-card .price { font-size: 3rem; color: #c8a45a; margin: 20px 0; }
-        .pricing-card .price span { font-size: 1rem; color: #999; }
-        .pricing-card ul { list-style: none; text-align: left; margin-bottom: 25px; }
-        .pricing-card ul li { padding: 10px 0; color: #666; border-bottom: 1px solid #eee; }
-        .pricing-card ul li:last-child { border-bottom: none; }
-        .pricing-card ul li::before { content: '✓'; color: #2d5a3f; margin-right: 10px; }
-        .btn { display: inline-block; padding: 15px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; text-decoration: none; transition: all 0.3s; }
-        .btn-primary { background: linear-gradient(135deg, #c8a45a 0%, #a8883e 100%); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(200, 164, 90, 0.4); }
-        .btn-outline { border: 2px solid #2d5a3f; color: #2d5a3f; }
-        .btn-outline:hover { background: #2d5a3f; color: white; }
-        .contact-section { text-align: center; }
-        .wechat-qr { display: inline-block; background: white; padding: 20px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); margin-top: 20px; }
-        .wechat-qr img { width: 250px; height: 250px; border-radius: 8px; }
-        .wechat-qr p { color: #333; margin-top: 15px; font-size: 1.1rem; }
-        .footer { text-align: center; color: white; padding: 40px 20px; opacity: 0.8; }
-        .footer p { margin-bottom: 10px; }
-        .admin-link { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
-        .admin-link:hover { color: white; }
-        .command-box { background: #2d3748; color: #e2e8f0; padding: 15px 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.9rem; margin: 10px 0; }
-        .language-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
-        .lang-item { background: #e8f0e8; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; color: #2d5a3f; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background: var(--warm-50);
+            color: var(--deep-800);
+            overflow-x: hidden;
+        }
+
+        /* ===== NAV ===== */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(254,249,243,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.08); }
+        .nav-inner {
+            max-width: 1280px; margin: 0 auto; padding: 0 32px;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 72px;
+        }
+        .nav-logo {
+            font-size: 1.5rem; font-weight: 800; color: var(--warm-700);
+            letter-spacing: -0.03em;
+        }
+        .nav-logo span { color: var(--warm-500); }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a {
+            text-decoration: none; color: var(--deep-600); font-weight: 500;
+            font-size: 0.9rem; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--warm-600); }
+        .nav-cta {
+            background: linear-gradient(135deg, var(--warm-500), var(--warm-600));
+            color: white !important; padding: 10px 24px; border-radius: 50px;
+            font-weight: 600 !important; box-shadow: 0 4px 15px rgba(232,135,58,0.3);
+            transition: transform 0.2s, box-shadow 0.2s !important;
+        }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(232,135,58,0.4) !important; }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 120px 32px 80px;
+            background: linear-gradient(165deg, var(--warm-50) 0%, var(--warm-100) 40%, #fde8d0 100%);
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -200px; right: -200px;
+            width: 600px; height: 600px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(240,165,99,0.2), transparent 70%);
+            animation: float 8s ease-in-out infinite;
+        }
+        .hero::after {
+            content: ''; position: absolute; bottom: -100px; left: -100px;
+            width: 400px; height: 400px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(5,150,105,0.1), transparent 70%);
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -20px) scale(1.05); }
+        }
+        .hero-inner {
+            max-width: 1280px; margin: 0 auto; width: 100%;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+            position: relative; z-index: 2;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(5,150,105,0.1); color: var(--emerald-700);
+            padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 600;
+            margin-bottom: 24px;
+            animation: slideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s both;
+        }
+        .hero-badge .dot { width: 8px; height: 8px; background: var(--emerald-600); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900;
+            line-height: 1.1; letter-spacing: -0.03em; color: var(--deep-800);
+            margin-bottom: 20px;
+            animation: slideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+        }
+        .hero-title .accent {
+            background: linear-gradient(135deg, var(--warm-500), var(--warm-700));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-desc {
+            font-size: 1.15rem; color: var(--deep-500); line-height: 1.7;
+            margin-bottom: 36px; max-width: 520px;
+            animation: slideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.4s both;
+        }
+        .hero-actions {
+            display: flex; gap: 16px; flex-wrap: wrap;
+            animation: slideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .btn-hero {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 16px 32px; border-radius: 14px; font-size: 1rem;
+            font-weight: 700; text-decoration: none; transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+            cursor: pointer; border: none;
+        }
+        .btn-hero.primary {
+            background: linear-gradient(135deg, var(--warm-500), var(--warm-700));
+            color: white; box-shadow: 0 8px 30px rgba(232,135,58,0.35);
+        }
+        .btn-hero.primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(232,135,58,0.45); }
+        .btn-hero.secondary {
+            background: white; color: var(--deep-700);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        }
+        .btn-hero.secondary:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+
+        /* Hero visual - translation demo */
+        .hero-visual {
+            position: relative;
+            animation: slideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s both;
+        }
+        .demo-card {
+            background: white; border-radius: 24px; padding: 32px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.1);
+            position: relative; overflow: hidden;
+        }
+        .demo-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--warm-400), var(--emerald-600), var(--sky-500));
+        }
+        .demo-header { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+        .demo-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .demo-dot.r { background: #ef4444; } .demo-dot.y { background: #f59e0b; } .demo-dot.g { background: #22c55e; }
+        .demo-line {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 0; border-bottom: 1px solid #f1f5f9;
+            opacity: 0; transform: translateX(-20px);
+            animation: slideRight 0.5s cubic-bezier(0.16,1,0.3,1) both;
+        }
+        .demo-line:nth-child(1) { animation-delay: 1s; }
+        .demo-line:nth-child(2) { animation-delay: 1.3s; }
+        .demo-line:nth-child(3) { animation-delay: 1.6s; }
+        .demo-line:nth-child(4) { animation-delay: 1.9s; }
+        @keyframes slideRight {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .demo-flag { font-size: 1.3rem; }
+        .demo-source { color: var(--deep-400); font-size: 0.9rem; flex: 1; }
+        .demo-arrow { color: var(--warm-400); font-size: 1.1rem; }
+        .demo-target { color: var(--deep-800); font-weight: 600; font-size: 0.95rem; flex: 1; }
+        .demo-tag {
+            display: inline-block; padding: 2px 8px; border-radius: 4px;
+            font-size: 0.7rem; font-weight: 600;
+        }
+        .demo-tag.vi { background: #fef3c7; color: #92400e; }
+        .demo-tag.id { background: #dbeafe; color: #1e40af; }
+        .demo-tag.en { background: #dcfce7; color: #166534; }
+
+        .hero-stats {
+            display: flex; gap: 24px; margin-top: 32px;
+            animation: slideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.7s both;
+        }
+        .stat-item { text-align: center; }
+        .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--warm-600); }
+        .stat-label { font-size: 0.8rem; color: var(--deep-400); margin-top: 2px; }
+
+        /* ===== SECTIONS ===== */
+        section { padding: 100px 32px; }
+        .section-inner { max-width: 1280px; margin: 0 auto; }
+        .section-label {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.08em; color: var(--warm-600); margin-bottom: 12px;
+        }
+        .section-label .line { width: 24px; height: 2px; background: var(--warm-400); border-radius: 2px; }
+        .section-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800;
+            line-height: 1.2; letter-spacing: -0.02em; color: var(--deep-800);
+            margin-bottom: 16px;
+        }
+        .section-desc {
+            font-size: 1.05rem; color: var(--deep-500); line-height: 1.7;
+            max-width: 560px; margin-bottom: 48px;
+        }
+
+        /* ===== FEATURES - Motion Cards ===== */
+        #features { background: white; }
+        .features-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+        }
+        .feature-card {
+            background: var(--warm-50); border-radius: 20px; padding: 32px 24px;
+            position: relative; overflow: hidden; cursor: default;
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(232,135,58,0.15);
+            border-color: rgba(232,135,58,0.2);
+        }
+        .feature-card::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--warm-400), var(--warm-600));
+            transform: scaleX(0); transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+            transform-origin: left;
+        }
+        .feature-card:hover::after { transform: scaleX(1); }
+        .feature-icon {
+            width: 56px; height: 56px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; margin-bottom: 20px;
+            transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+        }
+        .feature-card:hover .feature-icon { transform: scale(1.1) rotate(-3deg); }
+        .feature-icon.c1 { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+        .feature-icon.c2 { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+        .feature-icon.c3 { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+        .feature-icon.c4 { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+        .feature-card h3 {
+            font-size: 1.15rem; font-weight: 700; color: var(--deep-800);
+            margin-bottom: 8px;
+        }
+        .feature-card p { font-size: 0.9rem; color: var(--deep-500); line-height: 1.6; }
+
+        /* ===== LANGUAGES - Search Filter ===== */
+        #languages {
+            background: linear-gradient(165deg, #f8fafc 0%, var(--warm-50) 100%);
+        }
+        .lang-search {
+            display: flex; align-items: center; gap: 12px;
+            background: white; border-radius: 16px; padding: 8px 8px 8px 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 32px;
+            max-width: 480px; border: 2px solid transparent;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .lang-search:focus-within {
+            border-color: var(--warm-300);
+            box-shadow: 0 4px 20px rgba(232,135,58,0.15);
+        }
+        .lang-search .icon { color: var(--deep-400); font-size: 1.2rem; flex-shrink: 0; }
+        .lang-search input {
+            flex: 1; border: none; outline: none; font-size: 1rem;
+            font-family: inherit; color: var(--deep-800); background: transparent;
+        }
+        .lang-search input::placeholder { color: var(--deep-400); }
+        .lang-search .count {
+            background: var(--warm-100); color: var(--warm-700);
+            padding: 6px 14px; border-radius: 10px; font-size: 0.8rem; font-weight: 600;
+            flex-shrink: 0;
+        }
+        .lang-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px;
+        }
+        .lang-chip {
+            display: flex; align-items: center; gap: 10px;
+            background: white; border-radius: 14px; padding: 16px 18px;
+            border: 1px solid rgba(0,0,0,0.06); cursor: default;
+            transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        .lang-chip:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border-color: var(--warm-200);
+        }
+        .lang-chip .flag { font-size: 1.6rem; }
+        .lang-chip .name { font-weight: 600; font-size: 0.95rem; color: var(--deep-700); }
+        .lang-chip .code { font-size: 0.75rem; color: var(--deep-400); }
+
+        /* ===== HOW IT WORKS ===== */
+        #howto { background: white; }
+        .steps-track {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+            position: relative;
+        }
+        .step-card {
+            text-align: center; padding: 40px 28px;
+            background: var(--warm-50); border-radius: 20px;
+            border: 1px solid rgba(0,0,0,0.04); position: relative;
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .step-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+        .step-num {
+            width: 48px; height: 48px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--warm-500), var(--warm-600));
+            color: white; font-size: 1.2rem; font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 15px rgba(232,135,58,0.3);
+        }
+        .step-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; color: var(--deep-800); }
+        .step-card p { font-size: 0.9rem; color: var(--deep-500); line-height: 1.6; }
+        .step-cmd {
+            display: inline-block; background: var(--deep-800); color: #e2e8f0;
+            padding: 8px 16px; border-radius: 8px; font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.82rem; margin-top: 12px; letter-spacing: 0.02em;
+        }
+
+        /* ===== PRICING ===== */
+        #pricing {
+            background: linear-gradient(165deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+        }
+        #pricing .section-label { color: var(--warm-400); }
+        #pricing .section-title { color: white; }
+        #pricing .section-desc { color: var(--deep-400); }
+        .pricing-tabs {
+            display: flex; gap: 4px; background: rgba(255,255,255,0.06);
+            border-radius: 12px; padding: 4px; margin-bottom: 40px;
+            display: inline-flex;
+        }
+        .pricing-tab {
+            padding: 10px 24px; border-radius: 10px; font-size: 0.9rem;
+            font-weight: 600; cursor: pointer; border: none; background: transparent;
+            color: rgba(255,255,255,0.5); transition: all 0.3s;
+            font-family: inherit;
+        }
+        .pricing-tab.active {
+            background: linear-gradient(135deg, var(--warm-500), var(--warm-600));
+            color: white; box-shadow: 0 4px 15px rgba(232,135,58,0.3);
+        }
+        .pricing-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+        }
+        .price-card {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px; padding: 36px 28px; position: relative;
+            transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+        }
+        .price-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+        }
+        .price-card.featured {
+            background: linear-gradient(165deg, rgba(232,135,58,0.15), rgba(232,135,58,0.05));
+            border-color: rgba(232,135,58,0.3);
+        }
+        .price-card.featured::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--warm-400), var(--warm-600));
+            border-radius: 20px 20px 0 0;
+        }
+        .price-badge {
+            position: absolute; top: -12px; right: 20px;
+            background: linear-gradient(135deg, var(--warm-500), var(--warm-600));
+            color: white; padding: 6px 16px; border-radius: 50px;
+            font-size: 0.75rem; font-weight: 700;
+            box-shadow: 0 4px 12px rgba(232,135,58,0.4);
+        }
+        .price-tier {
+            font-size: 0.8rem; font-weight: 600; color: var(--warm-400);
+            text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;
+        }
+        .price-name { font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; }
+        .price-amount {
+            display: flex; align-items: baseline; gap: 4px; margin-bottom: 8px;
+        }
+        .price-currency { font-size: 1.2rem; color: var(--warm-400); font-weight: 600; }
+        .price-value { font-size: 3rem; font-weight: 900; color: white; line-height: 1; }
+        .price-period { font-size: 0.9rem; color: var(--deep-400); margin-bottom: 24px; }
+        .price-features { list-style: none; margin-bottom: 28px; }
+        .price-features li {
+            padding: 8px 0; font-size: 0.9rem; color: rgba(255,255,255,0.7);
+            display: flex; align-items: center; gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .price-features li:last-child { border-bottom: none; }
+        .price-features .check {
+            width: 18px; height: 18px; border-radius: 50%;
+            background: rgba(5,150,105,0.2); color: var(--emerald-600);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.65rem; flex-shrink: 0;
+        }
+        .btn-price {
+            display: block; text-align: center; padding: 14px;
+            border-radius: 12px; font-weight: 700; font-size: 0.95rem;
+            text-decoration: none; transition: all 0.3s; font-family: inherit;
+        }
+        .btn-price.filled {
+            background: linear-gradient(135deg, var(--warm-500), var(--warm-600));
+            color: white; box-shadow: 0 4px 20px rgba(232,135,58,0.3);
+        }
+        .btn-price.filled:hover { box-shadow: 0 8px 30px rgba(232,135,58,0.5); transform: translateY(-2px); }
+        .btn-price.outline {
+            background: transparent; color: rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .btn-price.outline:hover { background: rgba(255,255,255,0.06); color: white; }
+
+        /* ===== STORIES / TESTIMONIALS ===== */
+        #stories { background: var(--warm-50); }
+        .stories-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+        }
+        .story-card {
+            background: white; border-radius: 20px; padding: 32px;
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .story-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+        .story-stars { color: var(--amber-500); font-size: 0.9rem; margin-bottom: 16px; letter-spacing: 2px; }
+        .story-text { font-size: 0.95rem; color: var(--deep-600); line-height: 1.7; margin-bottom: 20px; }
+        .story-author { display: flex; align-items: center; gap: 12px; }
+        .story-avatar {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--warm-200), var(--warm-300));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; font-weight: 700; color: var(--warm-800);
+        }
+        .story-name { font-weight: 700; font-size: 0.9rem; color: var(--deep-800); }
+        .story-role { font-size: 0.8rem; color: var(--deep-400); }
+
+        /* ===== PARTNERS ===== */
+        #partners { background: white; }
+        .partners-track {
+            display: flex; align-items: center; justify-content: center;
+            gap: 48px; flex-wrap: wrap; opacity: 0.5;
+        }
+        .partner-logo {
+            font-size: 1.1rem; font-weight: 700; color: var(--deep-500);
+            padding: 12px 24px; letter-spacing: 0.05em;
+        }
+
+        /* ===== CTA ===== */
+        #cta {
+            background: linear-gradient(165deg, var(--warm-500) 0%, var(--warm-700) 50%, var(--warm-800) 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        #cta::before {
+            content: ''; position: absolute; top: -100px; right: -100px;
+            width: 400px; height: 400px; border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+        }
+        #cta::after {
+            content: ''; position: absolute; bottom: -80px; left: -80px;
+            width: 300px; height: 300px; border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+        }
+        .cta-inner { position: relative; z-index: 2; }
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 3rem); font-weight: 900;
+            margin-bottom: 16px; letter-spacing: -0.02em;
+        }
+        .cta-desc { font-size: 1.1rem; opacity: 0.9; max-width: 560px; margin: 0 auto 36px; line-height: 1.7; }
+        .btn-cta {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: white; color: var(--warm-700);
+            padding: 18px 40px; border-radius: 14px; font-size: 1.1rem;
+            font-weight: 700; text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+        .btn-cta:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+
+        /* ===== FAQ ===== */
+        #faq { background: var(--warm-50); }
+        .faq-list { max-width: 720px; }
+        .faq-item {
+            background: white; border-radius: 14px; margin-bottom: 12px;
+            border: 1px solid rgba(0,0,0,0.04); overflow: hidden;
+        }
+        .faq-q {
+            padding: 20px 24px; font-weight: 700; font-size: 1rem;
+            color: var(--deep-800); cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: background 0.2s;
+        }
+        .faq-q:hover { background: var(--warm-50); }
+        .faq-q .arrow { transition: transform 0.3s; font-size: 0.8rem; color: var(--deep-400); }
+        .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+        .faq-a {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .faq-item.open .faq-a { max-height: 200px; }
+        .faq-a-inner { padding: 0 24px 20px; color: var(--deep-500); font-size: 0.95rem; line-height: 1.7; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--deep-800); color: rgba(255,255,255,0.6);
+            padding: 60px 32px 40px; text-align: center;
+        }
+        .footer-logo { font-size: 1.5rem; font-weight: 800; color: white; margin-bottom: 8px; }
+        .footer-logo span { color: var(--warm-400); }
+        .footer-links { display: flex; gap: 24px; justify-content: center; margin: 20px 0; }
+        .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .footer-links a:hover { color: white; }
+        .footer-copy { font-size: 0.8rem; margin-top: 24px; }
+        .admin-link { color: rgba(255,255,255,0.3); font-size: 0.8rem; text-decoration: none; }
+        .admin-link:hover { color: rgba(255,255,255,0.6); }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .reveal {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+            .hero-visual { max-width: 500px; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+            .stories-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+        }
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            .hero { padding: 100px 20px 60px; }
+            section { padding: 60px 20px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .steps-track { grid-template-columns: 1fr; }
+            .hero-stats { flex-wrap: wrap; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>CadTrans</h1>
-            <p>CAD多国语言翻译插件</p>
-            <p style="font-size: 1rem; margin-top: 10px; opacity: 0.8;">支持越南语、印尼语、英语、日语、韩语等多种语言翻译</p>
-        </div>
 
-        <div class="card">
-            <h2>功能特点</h2>
-            <div class="feature-list">
-                <div class="feature-item">
-                    <span>🌐</span>
-                    <h3>多国语言支持</h3>
-                    <p>越南语、印尼语、英语、日语、韩语等多种语言互译</p>
-                </div>
-                <div class="feature-item">
-                    <span>⚡</span>
-                    <h3>快速翻译</h3>
-                    <p>一键选择文本即可翻译，支持批量处理</p>
-                </div>
-                <div class="feature-item">
-                    <span>🎨</span>
-                    <h3>智能排版</h3>
-                    <p>自动在原文下方生成中文，保持图纸整洁</p>
-                </div>
-                <div class="feature-item">
-                    <span>🔒</span>
-                    <h3>安全可靠</h3>
-                    <p>本地处理为主，翻译结果直接写入CAD</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>支持语言</h2>
-            <div class="language-grid">
-                <div class="lang-item">🇻🇳 越南语</div>
-                <div class="lang-item">🇮🇩 印尼语</div>
-                <div class="lang-item">🇬🇧 英语</div>
-                <div class="lang-item">🇯🇵 日语</div>
-                <div class="lang-item">🇰🇷 韩语</div>
-                <div class="lang-item">🇨🇳 简体中文</div>
-                <div class="lang-item">🇹🇼 繁体中文</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>使用方法</h2>
-            <p><strong>步骤1：加载插件</strong></p>
-            <div class="command-box">NETLOAD → 选择 CadTrans.dll</div>
-            <p><strong>步骤2：选择文本</strong></p>
-            <div class="command-box">TranslateVNQuick → 选择要翻译的文本 → 回车</div>
-            <p><strong>步骤3：等待完成</strong></p>
-            <p>翻译结果会自动生成在原文下方，使用绿色显示。</p>
-        </div>
-
-        <div class="card">
-            <h2>价格方案</h2>
-            <p style="margin-bottom:15px;color:#666;">免费试用1天（5000字符），之后按以下套餐购买：</p>
-
-            <h3 style="color:#37474F;margin:15px 0 10px;">5K 套餐（5000字符/天）</h3>
-            <div class="pricing">
-                <div class="pricing-card">
-                    <h3>日卡-5K</h3>
-                    <div class="price">¥10<span>/天</span></div>
-                    <ul>
-                        <li>1天使用期限</li>
-                        <li>5000字符/天</li>
-                        <li>绑定1台电脑</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-outline">联系购买</a>
-                </div>
-                <div class="pricing-card">
-                    <h3>月卡-5K</h3>
-                    <div class="price">¥150<span>/月</span></div>
-                    <ul>
-                        <li>30天使用期限</li>
-                        <li>5000字符/天</li>
-                        <li>绑定1台电脑</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-outline">联系购买</a>
-                </div>
-                <div class="pricing-card best">
-                    <div class="badge">推荐</div>
-                    <h3>年卡-5K</h3>
-                    <div class="price">¥900<span>/年</span></div>
-                    <ul>
-                        <li>365天使用期限</li>
-                        <li>5000字符/天</li>
-                        <li>绑定1台电脑</li>
-                        <li>免费升级更新</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-primary">立即购买</a>
-                </div>
-            </div>
-
-            <h3 style="color:#37474F;margin:25px 0 10px;">50K 套餐（50000字符/天）</h3>
-            <div class="pricing">
-                <div class="pricing-card">
-                    <h3>日卡-50K</h3>
-                    <div class="price">¥50<span>/天</span></div>
-                    <ul>
-                        <li>1天使用期限</li>
-                        <li>50000字符/天</li>
-                        <li>需提供邮箱</li>
-                        <li>绑定1台电脑</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-outline">联系购买</a>
-                </div>
-                <div class="pricing-card">
-                    <h3>月卡-50K</h3>
-                    <div class="price">¥750<span>/月</span></div>
-                    <ul>
-                        <li>30天使用期限</li>
-                        <li>50000字符/天</li>
-                        <li>需提供邮箱</li>
-                        <li>绑定1台电脑</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-outline">联系购买</a>
-                </div>
-                <div class="pricing-card best">
-                    <div class="badge">超值</div>
-                    <h3>年卡-50K</h3>
-                    <div class="price">¥4500<span>/年</span></div>
-                    <ul>
-                        <li>365天使用期限</li>
-                        <li>50000字符/天</li>
-                        <li>需提供邮箱</li>
-                        <li>绑定1台电脑</li>
-                        <li>免费升级更新</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-primary">立即购买</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" id="contact">
-            <h2>联系购买</h2>
-            <div class="contact-section">
-                <p style="font-size: 1.2rem; color: #333;">添加微信，转账后获取许可证密钥</p>
-                <div class="wechat-qr">
-                    <img src="assets/二维码.jpg" alt="微信二维码" style="width:250px;height:250px;object-fit:cover;border-radius:8px;">
-                    <p>扫描二维码添加微信</p>
-                </div>
-                <p style="margin-top: 20px; color: #999;">购买流程：添加微信 → 告知需求 → 转账 → 发送密钥</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>常见问题</h2>
-            <p><strong>Q：支持哪些CAD版本？</strong></p>
-            <p>A：支持AutoCAD 2020及以上版本，兼容ZWCAD、GstarCAD等国产CAD。</p>
-            <p><strong>Q：翻译需要联网吗？</strong></p>
-            <p>A：翻译功能需要联网调用翻译API。</p>
-            <p><strong>Q：可以更换电脑使用吗？</strong></p>
-            <p>A：许可证绑定电脑，更换电脑需要联系我重置绑定。</p>
-            <p><strong>Q：有没有试用版？</strong></p>
-            <p>A：有，首次安装自动获得1天/5000字符免费试用。</p>
-            <p><strong>Q：5K和50K套餐有什么区别？</strong></p>
-            <p>A：5K套餐每天可翻译5000字符，50K套餐每天50000字符。50K套餐需提供邮箱以获取更高API额度。</p>
-        </div>
-
-        <div class="footer">
-            <p>CadTrans - CAD多国语言翻译插件</p>
-            <p>Copyright 2026 All Rights Reserved</p>
-            <a href="admin.html" class="admin-link">管理员登录</a>
+<!-- NAV -->
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <div class="nav-logo">Cad<span>Trans</span></div>
+        <div class="nav-links">
+            <a href="#features">功能</a>
+            <a href="#languages">语言</a>
+            <a href="#howto">教程</a>
+            <a href="#pricing">价格</a>
+            <a href="#faq">FAQ</a>
+            <a href="#cta" class="nav-cta">立即使用</a>
         </div>
     </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-content">
+            <div class="hero-badge"><span class="dot"></span> 支持11种语言互译</div>
+            <h1 class="hero-title">CAD图纸<br><span class="accent">一键翻译</span>插件</h1>
+            <p class="hero-desc">专为工程设计打造的多语言翻译工具，直接在CAD中翻译图纸文本，保持排版整洁，提升跨国协作效率。</p>
+            <div class="hero-actions">
+                <a href="#pricing" class="btn-hero primary">查看价格方案 &rarr;</a>
+                <a href="#howto" class="btn-hero secondary">使用教程</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item"><div class="stat-num">11</div><div class="stat-label">支持语言</div></div>
+                <div class="stat-item"><div class="stat-num">5万</div><div class="stat-label">字符/天</div></div>
+                <div class="stat-item"><div class="stat-num">3秒</div><div class="stat-label">快速翻译</div></div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="demo-card">
+                <div class="demo-header">
+                    <span class="demo-dot r"></span><span class="demo-dot y"></span><span class="demo-dot g"></span>
+                </div>
+                <div class="demo-line">
+                    <span class="demo-flag">🇻🇳</span>
+                    <span class="demo-source">CHI TIẾT TƯỜNG VÂY</span>
+                    <span class="demo-arrow">&rarr;</span>
+                    <span class="demo-target">围墙详图</span>
+                    <span class="demo-tag vi">越→中</span>
+                </div>
+                <div class="demo-line">
+                    <span class="demo-flag">🇮🇩</span>
+                    <span class="demo-source">DETAIL PONDASI</span>
+                    <span class="demo-arrow">&rarr;</span>
+                    <span class="demo-target">基础详图</span>
+                    <span class="demo-tag id">印→中</span>
+                </div>
+                <div class="demo-line">
+                    <span class="demo-flag">🇬🇧</span>
+                    <span class="demo-source">STRUCTURAL PLAN</span>
+                    <span class="demo-arrow">&rarr;</span>
+                    <span class="demo-target">结构平面图</span>
+                    <span class="demo-tag en">英→中</span>
+                </div>
+                <div class="demo-line">
+                    <span class="demo-flag">🇯🇵</span>
+                    <span class="demo-source">平面図 詳細</span>
+                    <span class="demo-arrow">&rarr;</span>
+                    <span class="demo-target">平面图详图</span>
+                    <span class="demo-tag vi">日→中</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+    <div class="section-inner">
+        <div class="reveal">
+            <div class="section-label"><span class="line"></span> 核心功能</div>
+            <h2 class="section-title">让图纸翻译像呼吸一样自然</h2>
+            <p class="section-desc">从语言选择到结果输出，每一步都经过精心打磨，只为让您专注于设计本身。</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon c1">🌐</div>
+                <h3>11种语言互译</h3>
+                <p>中、越、印、英、日、韩、泰、法、德、西、俄任意组合翻译</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon c2">⚡</div>
+                <h3>一键快速翻译</h3>
+                <p>选择文本即刻翻译，支持批量处理，智能429限流重试</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon c3">🎨</div>
+                <h3>智能自动排版</h3>
+                <p>翻译结果自动跟随原文高度，偏移距离智能计算，保持图纸整洁</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon c4">🔒</div>
+                <h3>安全绑定机制</h3>
+                <p>密钥与机器指纹绑定，一机一钥，保障授权安全</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- LANGUAGES -->
+<section id="languages">
+    <div class="section-inner">
+        <div class="reveal">
+            <div class="section-label"><span class="line"></span> 语言支持</div>
+            <h2 class="section-title">覆盖全球主要工程语言</h2>
+            <p class="section-desc">无论项目在哪个国家，都能找到对应的语言组合。</p>
+        </div>
+        <div class="lang-search reveal">
+            <span class="icon">&#128269;</span>
+            <input type="text" id="langSearch" placeholder="搜索语言..." oninput="filterLangs()">
+            <span class="count" id="langCount">11 种语言</span>
+        </div>
+        <div class="lang-grid reveal" id="langGrid">
+            <div class="lang-chip" data-name="简体中文 chinese"><span class="flag">🇨🇳</span><div><div class="name">简体中文</div><div class="code">zh-CN</div></div></div>
+            <div class="lang-chip" data-name="越南语 vietnamese"><span class="flag">🇻🇳</span><div><div class="name">越南语</div><div class="code">vi</div></div></div>
+            <div class="lang-chip" data-name="印尼语 indonesian"><span class="flag">🇮🇩</span><div><div class="name">印尼语</div><div class="code">id</div></div></div>
+            <div class="lang-chip" data-name="英语 english"><span class="flag">🇬🇧</span><div><div class="name">英语</div><div class="code">en</div></div></div>
+            <div class="lang-chip" data-name="日语 japanese"><span class="flag">🇯🇵</span><div><div class="name">日语</div><div class="code">ja</div></div></div>
+            <div class="lang-chip" data-name="韩语 korean"><span class="flag">🇰🇷</span><div><div class="name">韩语</div><div class="code">ko</div></div></div>
+            <div class="lang-chip" data-name="泰语 thai"><span class="flag">🇹🇭</span><div><div class="name">泰语</div><div class="code">th</div></div></div>
+            <div class="lang-chip" data-name="法语 french"><span class="flag">🇫🇷</span><div><div class="name">法语</div><div class="code">fr</div></div></div>
+            <div class="lang-chip" data-name="德语 german"><span class="flag">🇩🇪</span><div><div class="name">德语</div><div class="code">de</div></div></div>
+            <div class="lang-chip" data-name="西班牙语 spanish"><span class="flag">🇪🇸</span><div><div class="name">西班牙语</div><div class="code">es</div></div></div>
+            <div class="lang-chip" data-name="俄语 russian"><span class="flag">🇷🇺</span><div><div class="name">俄语</div><div class="code">ru</div></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="howto">
+    <div class="section-inner">
+        <div class="reveal">
+            <div class="section-label"><span class="line"></span> 使用教程</div>
+            <h2 class="section-title">三步开始翻译</h2>
+            <p class="section-desc">无需复杂配置，加载即用，翻译结果直接写入CAD图纸。</p>
+        </div>
+        <div class="steps-track">
+            <div class="step-card reveal">
+                <div class="step-num">1</div>
+                <h3>加载插件</h3>
+                <p>在CAD中输入NETLOAD命令，选择CadTrans.dll文件</p>
+                <span class="step-cmd">NETLOAD → CadTrans.dll</span>
+            </div>
+            <div class="step-card reveal">
+                <div class="step-num">2</div>
+                <h3>选择语言</h3>
+                <p>打开面板选择源语言和目标语言，配置翻译参数</p>
+                <span class="step-cmd">CadTrans 命令</span>
+            </div>
+            <div class="step-card reveal">
+                <div class="step-num">3</div>
+                <h3>翻译图纸</h3>
+                <p>选择文本对象，一键翻译，结果自动写入原文下方</p>
+                <span class="step-cmd">快速翻译 / 完整翻译</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+    <div class="section-inner">
+        <div class="reveal">
+            <div class="section-label"><span class="line"></span> 价格方案</div>
+            <h2 class="section-title">选择适合您的方案</h2>
+            <p class="section-desc">免费试用1天（5000字符），之后按需购买，一机一钥安全绑定。</p>
+        </div>
+        <div class="reveal">
+            <div class="pricing-tabs">
+                <button class="pricing-tab active" onclick="switchTier('5k')">5K 套餐</button>
+                <button class="pricing-tab" onclick="switchTier('50k')">50K 套餐</button>
+            </div>
+        </div>
+        <!-- 5K Tier -->
+        <div class="pricing-grid reveal" id="tier5k">
+            <div class="price-card">
+                <div class="price-tier">5K 套餐</div>
+                <div class="price-name">日卡</div>
+                <div class="price-amount"><span class="price-currency">&yen;</span><span class="price-value">10</span></div>
+                <div class="price-period">/天 &middot; 5000字符/天</div>
+                <ul class="price-features">
+                    <li><span class="check">&check;</span>1天使用期限</li>
+                    <li><span class="check">&check;</span>5000字符/天</li>
+                    <li><span class="check">&check;</span>绑定1台电脑</li>
+                </ul>
+                <a href="#cta" class="btn-price outline">联系购买</a>
+            </div>
+            <div class="price-card">
+                <div class="price-tier">5K 套餐</div>
+                <div class="price-name">月卡</div>
+                <div class="price-amount"><span class="price-currency">&yen;</span><span class="price-value">150</span></div>
+                <div class="price-period">/月 &middot; 5000字符/天</div>
+                <ul class="price-features">
+                    <li><span class="check">&check;</span>30天使用期限</li>
+                    <li><span class="check">&check;</span>5000字符/天</li>
+                    <li><span class="check">&check;</span>绑定1台电脑</li>
+                </ul>
+                <a href="#cta" class="btn-price outline">联系购买</a>
+            </div>
+            <div class="price-card featured">
+                <span class="price-badge">推荐</span>
+                <div class="price-tier">5K 套餐</div>
+                <div class="price-name">年卡</div>
+                <div class="price-amount"><span class="price-currency">&yen;</span><span class="price-value">900</span></div>
+                <div class="price-period">/年 &middot; 5000字符/天</div>
+                <ul class="price-features">
+                    <li><span class="check">&check;</span>365天使用期限</li>
+                    <li><span class="check">&check;</span>5000字符/天</li>
+                    <li><span class="check">&check;</span>绑定1台电脑</li>
+                    <li><span class="check">&check;</span>免费升级更新</li>
+                </ul>
+                <a href="#cta" class="btn-price filled">立即购买</a>
+            </div>
+        </div>
+        <!-- 50K Tier -->
+        <div class="pricing-grid reveal" id="tier50k" style="display:none;">
+            <div class="price-card">
+                <div class="price-tier">50K 套餐</div>
+                <div class="price-name">日卡</div>
+                <div class="price-amount"><span class="price-currency">&yen;</span><span class="price-value">50</span></div>
+                <div class="price-period">/天 &middot; 50000字符/天</div>
+                <ul class="price-features">
+                    <li><span class="check">&check;</span>1天使用期限</li>
+                    <li><span class="check">&check;</span>50000字符/天</li>
+                    <li><span class="check">&check;</span>需提供邮箱</li>
+                    <li><span class="check">&check;</span>绑定1台电脑</li>
+                </ul>
+                <a href="#cta" class="btn-price outline">联系购买</a>
+            </div>
+            <div class="price-card">
+                <div class="price-tier">50K 套餐</div>
+                <div class="price-name">月卡</div>
+                <div class="price-amount"><span class="price-currency">&yen;</span><span class="price-value">750</span></div>
+                <div class="price-period">/月 &middot; 50000字符/天</div>
+                <ul class="price-features">
+                    <li><span class="check">&check;</span>30天使用期限</li>
+                    <li><span class="check">&check;</span>50000字符/天</li>
+                    <li><span class="check">&check;</span>需提供邮箱</li>
+                    <li><span class="check">&check;</span>绑定1台电脑</li>
+                </ul>
+                <a href="#cta" class="btn-price outline">联系购买</a>
+            </div>
+            <div class="price-card featured">
+                <span class="price-badge">超值</span>
+                <div class="price-tier">50K 套餐</div>
+                <div class="price-name">年卡</div>
+                <div class="price-amount"><span class="price-currency">&yen;</span><span class="price-value">4500</span></div>
+                <div class="price-period">/年 &middot; 50000字符/天</div>
+                <ul class="price-features">
+                    <li><span class="check">&check;</span>365天使用期限</li>
+                    <li><span class="check">&check;</span>50000字符/天</li>
+                    <li><span class="check">&check;</span>需提供邮箱</li>
+                    <li><span class="check">&check;</span>绑定1台电脑</li>
+                    <li><span class="check">&check;</span>免费升级更新</li>
+                </ul>
+                <a href="#cta" class="btn-price filled">立即购买</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SUCCESS STORIES -->
+<section id="stories">
+    <div class="section-inner">
+        <div class="reveal">
+            <div class="section-label"><span class="line"></span> 用户评价</div>
+            <h2 class="section-title">来自一线工程师的真实反馈</h2>
+            <p class="section-desc">他们用CadTrans解决了跨国项目中的语言障碍。</p>
+        </div>
+        <div class="stories-grid">
+            <div class="story-card reveal">
+                <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="story-text">"越南项目的图纸全是越文标注，以前要一个个查字典。现在用CadTrans一键翻译，效率提升了10倍不止。"</p>
+                <div class="story-author">
+                    <div class="story-avatar">张</div>
+                    <div><div class="story-name">张工</div><div class="story-role">结构工程师 &middot; 越南项目</div></div>
+                </div>
+            </div>
+            <div class="story-card reveal">
+                <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="story-text">"印尼和国内团队协作时，双语标注非常实用。翻译结果直接在原文下方，图纸再也不乱了。"</p>
+                <div class="story-author">
+                    <div class="story-avatar">李</div>
+                    <div><div class="story-name">李工</div><div class="story-role">建筑设计师 &middot; 印尼项目</div></div>
+                </div>
+            </div>
+            <div class="story-card reveal">
+                <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="story-text">"日本项目的图纸标注用CadTrans翻译很准确，排版自动跟随原文高度，省了大量手动调整的时间。"</p>
+                <div class="story-author">
+                    <div class="story-avatar">王</div>
+                    <div><div class="story-name">王工</div><div class="story-role">机电工程师 &middot; 日本项目</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PARTNERS -->
+<section id="partners">
+    <div class="section-inner" style="text-align:center;">
+        <div class="reveal">
+            <div class="section-label" style="justify-content:center;"><span class="line"></span> 兼容平台</div>
+            <p style="color:var(--deep-400);margin-bottom:40px;font-size:0.95rem;">完美适配主流CAD平台，即装即用</p>
+        </div>
+        <div class="partners-track reveal">
+            <span class="partner-logo">AutoCAD</span>
+            <span class="partner-logo">ZWCAD</span>
+            <span class="partner-logo">GstarCAD</span>
+            <span class="partner-logo">BricsCAD</span>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+    <div class="section-inner cta-inner">
+        <div class="reveal">
+            <h2 class="cta-title">开始翻译您的图纸</h2>
+            <p class="cta-desc">免费试用1天，体验CAD图纸一键翻译的便捷。添加微信获取许可证密钥，立即解锁全部功能。</p>
+            <a href="#contact" class="btn-cta">添加微信购买 &rarr;</a>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:white;">
+    <div class="section-inner" style="text-align:center;">
+        <div class="reveal">
+            <div class="section-label" style="justify-content:center;"><span class="line"></span> 联系购买</div>
+            <h2 class="section-title">添加微信，获取密钥</h2>
+            <p class="section-desc" style="margin:0 auto 32px;">扫描下方二维码添加微信，转账后即可获得许可证密钥。</p>
+        </div>
+        <div class="reveal" style="display:inline-block;background:var(--warm-50);padding:32px;border-radius:20px;border:1px solid rgba(0,0,0,0.06);">
+            <img src="assets/二维码.jpg" alt="微信二维码" style="width:200px;height:200px;object-fit:cover;border-radius:12px;display:block;margin-bottom:16px;">
+            <p style="color:var(--deep-600);font-weight:600;">扫描添加微信</p>
+            <p style="color:var(--deep-400);font-size:0.85rem;margin-top:4px;">流程：添加微信 → 告知需求 → 转账 → 发送密钥</p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+    <div class="section-inner">
+        <div class="reveal">
+            <div class="section-label"><span class="line"></span> 常见问题</div>
+            <h2 class="section-title">您可能想知道的</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-q">支持哪些CAD版本？<span class="arrow">&#9660;</span></div>
+                <div class="faq-a"><div class="faq-a-inner">支持AutoCAD 2020及以上版本，兼容ZWCAD、GstarCAD等国产CAD。</div></div>
+            </div>
+            <div class="faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-q">翻译需要联网吗？<span class="arrow">&#9660;</span></div>
+                <div class="faq-a"><div class="faq-a-inner">翻译功能需要联网调用翻译API，但翻译结果直接写入CAD图纸文件。</div></div>
+            </div>
+            <div class="faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-q">可以更换电脑使用吗？<span class="arrow">&#9660;</span></div>
+                <div class="faq-a"><div class="faq-a-inner">许可证绑定电脑（CPU+硬盘指纹），更换电脑需要联系管理员重置绑定。</div></div>
+            </div>
+            <div class="faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-q">有没有试用版？<span class="arrow">&#9660;</span></div>
+                <div class="faq-a"><div class="faq-a-inner">有，首次安装自动获得1天免费试用，每天5000字符翻译额度。</div></div>
+            </div>
+            <div class="faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-q">5K和50K套餐有什么区别？<span class="arrow">&#9660;</span></div>
+                <div class="faq-a"><div class="faq-a-inner">5K套餐每天可翻译5000字符，50K套餐每天50000字符。50K套餐需提供邮箱以获取更高API额度。</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-logo">Cad<span>Trans</span></div>
+    <p style="font-size:0.9rem;">CAD多国语言翻译插件</p>
+    <div class="footer-links">
+        <a href="#features">功能</a>
+        <a href="#pricing">价格</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">联系</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 CadTrans. All Rights Reserved.</p>
+    <a href="admin.html" class="admin-link">管理员登录</a>
+</footer>
+
+<script>
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 80);
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// Language search filter
+function filterLangs() {
+    const q = document.getElementById('langSearch').value.toLowerCase();
+    const chips = document.querySelectorAll('.lang-chip');
+    let count = 0;
+    chips.forEach(chip => {
+        const name = chip.dataset.name.toLowerCase();
+        const show = name.includes(q);
+        chip.style.display = show ? '' : 'none';
+        if (show) count++;
+    });
+    document.getElementById('langCount').textContent = count + ' 种语言';
+}
+
+// Pricing tier switch
+function switchTier(tier) {
+    document.getElementById('tier5k').style.display = tier === '5k' ? '' : 'none';
+    document.getElementById('tier50k').style.display = tier === '50k' ? '' : 'none';
+    document.querySelectorAll('.pricing-tab').forEach((tab, i) => {
+        tab.classList.toggle('active', (i === 0 && tier === '5k') || (i === 1 && tier === '50k'));
+    });
+}
+
+// FAQ toggle
+function toggleFaq(item) {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+}
+</script>
 </body>
 </html>
