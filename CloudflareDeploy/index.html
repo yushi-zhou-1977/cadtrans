@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CadTrans - CAD多国语言翻译插件</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; color: white; padding: 60px 20px; }
+        .header h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        .card { background: white; border-radius: 16px; padding: 30px; margin: 20px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+        .card h2 { color: #333; font-size: 1.5rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #667eea; }
+        .card p { color: #666; line-height: 1.8; margin-bottom: 15px; font-size: 1rem; }
+        .feature-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .feature-item { background: #f8f9fa; border-radius: 12px; padding: 25px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; }
+        .feature-item:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .feature-item span { font-size: 3rem; color: #667eea; margin-bottom: 15px; display: block; }
+        .feature-item h3 { color: #333; margin-bottom: 10px; }
+        .feature-item p { color: #666; font-size: 0.9rem; }
+        .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .pricing-card { background: white; border-radius: 16px; padding: 40px; text-align: center; position: relative; overflow: hidden; }
+        .pricing-card.best { border: 3px solid #667eea; transform: scale(1.05); }
+        .pricing-card.best .badge { position: absolute; top: 0; right: 0; background: #667eea; color: white; padding: 8px 20px; font-size: 0.8rem; border-radius: 0 0 0 12px; }
+        .pricing-card h3 { font-size: 1.5rem; color: #333; margin-bottom: 10px; }
+        .pricing-card .price { font-size: 3rem; color: #667eea; margin: 20px 0; }
+        .pricing-card .price span { font-size: 1rem; color: #999; }
+        .pricing-card ul { list-style: none; text-align: left; margin-bottom: 25px; }
+        .pricing-card ul li { padding: 10px 0; color: #666; border-bottom: 1px solid #eee; }
+        .pricing-card ul li:last-child { border-bottom: none; }
+        .pricing-card ul li::before { content: '✓'; color: #28a745; margin-right: 10px; }
+        .btn { display: inline-block; padding: 15px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; text-decoration: none; transition: all 0.3s; }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4); }
+        .btn-outline { border: 2px solid #667eea; color: #667eea; }
+        .btn-outline:hover { background: #667eea; color: white; }
+        .contact-section { text-align: center; }
+        .wechat-qr { display: inline-block; background: white; padding: 20px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); margin-top: 20px; }
+        .wechat-qr img { width: 250px; height: 250px; border-radius: 8px; }
+        .wechat-qr p { color: #333; margin-top: 15px; font-size: 1.1rem; }
+        .footer { text-align: center; color: white; padding: 40px 20px; opacity: 0.8; }
+        .footer p { margin-bottom: 10px; }
+        .admin-link { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+        .admin-link:hover { color: white; }
+        .command-box { background: #2d3748; color: #e2e8f0; padding: 15px 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.9rem; margin: 10px 0; }
+        .language-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+        .lang-item { background: #e2e8f0; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; color: #4a5568; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CadTrans</h1>
+            <p>CAD多国语言翻译插件</p>
+            <p style="font-size: 1rem; margin-top: 10px; opacity: 0.8;">支持越南语、印尼语、英语、日语、韩语等多种语言翻译</p>
+        </div>
+
+        <div class="card">
+            <h2>功能特点</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span>🌐</span>
+                    <h3>多国语言支持</h3>
+                    <p>越南语、印尼语、英语、日语、韩语等多种语言互译</p>
+                </div>
+                <div class="feature-item">
+                    <span>⚡</span>
+                    <h3>快速翻译</h3>
+                    <p>一键选择文本即可翻译，支持批量处理</p>
+                </div>
+                <div class="feature-item">
+                    <span>🎨</span>
+                    <h3>智能排版</h3>
+                    <p>自动在原文下方生成中文，保持图纸整洁</p>
+                </div>
+                <div class="feature-item">
+                    <span>🔒</span>
+                    <h3>安全可靠</h3>
+                    <p>本地处理为主，翻译结果直接写入CAD</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>支持语言</h2>
+            <div class="language-grid">
+                <div class="lang-item">🇻🇳 越南语</div>
+                <div class="lang-item">🇮🇩 印尼语</div>
+                <div class="lang-item">🇬🇧 英语</div>
+                <div class="lang-item">🇯🇵 日语</div>
+                <div class="lang-item">🇰🇷 韩语</div>
+                <div class="lang-item">🇨🇳 简体中文</div>
+                <div class="lang-item">🇹🇼 繁体中文</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>使用方法</h2>
+            <p><strong>步骤1：加载插件</strong></p>
+            <div class="command-box">NETLOAD → 选择 CadTrans.dll</div>
+            <p><strong>步骤2：选择文本</strong></p>
+            <div class="command-box">TranslateVNQuick → 选择要翻译的文本 → 回车</div>
+            <p><strong>步骤3：等待完成</strong></p>
+            <p>翻译结果会自动生成在原文下方，使用绿色显示。</p>
+        </div>
+
+        <div class="card">
+            <h2>价格方案</h2>
+            <p style="margin-bottom:15px;color:#666;">免费试用1天（5000字符），之后按以下套餐购买：</p>
+
+            <h3 style="color:#37474F;margin:15px 0 10px;">5K 套餐（5000字符/天）</h3>
+            <div class="pricing">
+                <div class="pricing-card">
+                    <h3>日卡-5K</h3>
+                    <div class="price">¥10<span>/天</span></div>
+                    <ul>
+                        <li>1天使用期限</li>
+                        <li>5000字符/天</li>
+                        <li>绑定1台电脑</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-outline">联系购买</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>月卡-5K</h3>
+                    <div class="price">¥150<span>/月</span></div>
+                    <ul>
+                        <li>30天使用期限</li>
+                        <li>5000字符/天</li>
+                        <li>绑定1台电脑</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-outline">联系购买</a>
+                </div>
+                <div class="pricing-card best">
+                    <div class="badge">推荐</div>
+                    <h3>年卡-5K</h3>
+                    <div class="price">¥900<span>/年</span></div>
+                    <ul>
+                        <li>365天使用期限</li>
+                        <li>5000字符/天</li>
+                        <li>绑定1台电脑</li>
+                        <li>免费升级更新</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">立即购买</a>
+                </div>
+            </div>
+
+            <h3 style="color:#37474F;margin:25px 0 10px;">50K 套餐（50000字符/天）</h3>
+            <div class="pricing">
+                <div class="pricing-card">
+                    <h3>日卡-50K</h3>
+                    <div class="price">¥50<span>/天</span></div>
+                    <ul>
+                        <li>1天使用期限</li>
+                        <li>50000字符/天</li>
+                        <li>需提供邮箱</li>
+                        <li>绑定1台电脑</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-outline">联系购买</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>月卡-50K</h3>
+                    <div class="price">¥750<span>/月</span></div>
+                    <ul>
+                        <li>30天使用期限</li>
+                        <li>50000字符/天</li>
+                        <li>需提供邮箱</li>
+                        <li>绑定1台电脑</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-outline">联系购买</a>
+                </div>
+                <div class="pricing-card best">
+                    <div class="badge">超值</div>
+                    <h3>年卡-50K</h3>
+                    <div class="price">¥4500<span>/年</span></div>
+                    <ul>
+                        <li>365天使用期限</li>
+                        <li>50000字符/天</li>
+                        <li>需提供邮箱</li>
+                        <li>绑定1台电脑</li>
+                        <li>免费升级更新</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">立即购买</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="contact">
+            <h2>联系购买</h2>
+            <div class="contact-section">
+                <p style="font-size: 1.2rem; color: #333;">添加微信，转账后获取许可证密钥</p>
+                <div class="wechat-qr">
+                    <img src="assets/二维码.jpg" alt="微信二维码" style="width:250px;height:250px;object-fit:cover;border-radius:8px;">
+                    <p>扫描二维码添加微信</p>
+                </div>
+                <p style="margin-top: 20px; color: #999;">购买流程：添加微信 → 告知需求 → 转账 → 发送密钥</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>常见问题</h2>
+            <p><strong>Q：支持哪些CAD版本？</strong></p>
+            <p>A：支持AutoCAD 2020及以上版本，兼容ZWCAD、GstarCAD等国产CAD。</p>
+            <p><strong>Q：翻译需要联网吗？</strong></p>
+            <p>A：翻译功能需要联网调用翻译API。</p>
+            <p><strong>Q：可以更换电脑使用吗？</strong></p>
+            <p>A：许可证绑定电脑，更换电脑需要联系我重置绑定。</p>
+            <p><strong>Q：有没有试用版？</strong></p>
+            <p>A：有，首次安装自动获得1天/5000字符免费试用。</p>
+            <p><strong>Q：5K和50K套餐有什么区别？</strong></p>
+            <p>A：5K套餐每天可翻译5000字符，50K套餐每天50000字符。50K套餐需提供邮箱以获取更高API额度。</p>
+        </div>
+
+        <div class="footer">
+            <p>CadTrans - CAD多国语言翻译插件</p>
+            <p>Copyright 2026 All Rights Reserved</p>
+            <a href="admin.html" class="admin-link">管理员登录</a>
+        </div>
+    </div>
+</body>
+</html>
