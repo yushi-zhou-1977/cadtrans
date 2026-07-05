@@ -155,47 +155,56 @@
         }
         .btn-hero.secondary:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
 
-        /* Hero visual - translation demo */
+        /* Hero visual - screenshot showcase */
         .hero-visual {
             position: relative;
             animation: slideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s both;
         }
-        .demo-card {
-            background: white; border-radius: 24px; padding: 32px;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.1);
-            position: relative; overflow: hidden;
+        .screenshot-card {
+            background: #1e293b; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.2);
+            position: relative;
         }
-        .demo-card::before {
+        .screenshot-card::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
             background: linear-gradient(90deg, var(--warm-400), var(--emerald-600), var(--sky-500));
+            z-index: 3;
         }
-        .demo-header { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
-        .demo-dot { width: 10px; height: 10px; border-radius: 50%; }
-        .demo-dot.r { background: #ef4444; } .demo-dot.y { background: #f59e0b; } .demo-dot.g { background: #22c55e; }
-        .demo-line {
-            display: flex; align-items: center; gap: 12px;
-            padding: 12px 0; border-bottom: 1px solid #f1f5f9;
-            opacity: 0; transform: translateX(-20px);
-            animation: slideRight 0.5s cubic-bezier(0.16,1,0.3,1) both;
+        .screenshot-header {
+            display: flex; align-items: center; gap: 8px;
+            padding: 12px 16px; background: #0f172a;
+            position: relative; z-index: 3;
         }
-        .demo-line:nth-child(1) { animation-delay: 1s; }
-        .demo-line:nth-child(2) { animation-delay: 1.3s; }
-        .demo-line:nth-child(3) { animation-delay: 1.6s; }
-        .demo-line:nth-child(4) { animation-delay: 1.9s; }
-        @keyframes slideRight {
-            to { opacity: 1; transform: translateX(0); }
+        .screenshot-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .screenshot-dot.r { background: #ef4444; } .screenshot-dot.y { background: #f59e0b; } .screenshot-dot.g { background: #22c55e; }
+        .screenshot-title { color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-left: 8px; font-weight: 500; }
+        .screenshot-img {
+            width: 100%; display: block;
+            transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
         }
-        .demo-flag { font-size: 1.3rem; }
-        .demo-source { color: var(--deep-400); font-size: 0.9rem; flex: 1; }
-        .demo-arrow { color: var(--warm-400); font-size: 1.1rem; }
-        .demo-target { color: var(--deep-800); font-weight: 600; font-size: 0.95rem; flex: 1; }
-        .demo-tag {
-            display: inline-block; padding: 2px 8px; border-radius: 4px;
-            font-size: 0.7rem; font-weight: 600;
+        .screenshot-card:hover .screenshot-img { transform: scale(1.03); }
+        .screenshot-annotations {
+            position: absolute; top: 40px; left: 0; right: 0; bottom: 0;
+            pointer-events: none; z-index: 2;
         }
-        .demo-tag.vi { background: #fef3c7; color: #92400e; }
-        .demo-tag.id { background: #dbeafe; color: #1e40af; }
-        .demo-tag.en { background: #dcfce7; color: #166534; }
+        .annotation {
+            position: absolute;
+            animation: fadeIn 0.5s ease both;
+        }
+        .annotation:nth-child(1) { animation-delay: 1s; }
+        .annotation:nth-child(2) { animation-delay: 1.3s; }
+        .annotation:nth-child(3) { animation-delay: 1.6s; }
+        .annotation:nth-child(4) { animation-delay: 1.9s; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .ann-label {
+            display: inline-block;
+            background: rgba(232,135,58,0.9); color: white;
+            padding: 4px 10px; border-radius: 6px;
+            font-size: 0.72rem; font-weight: 700;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(232,135,58,0.4);
+            backdrop-filter: blur(4px);
+        }
 
         .hero-stats {
             display: flex; gap: 24px; margin-top: 32px;
@@ -596,37 +605,17 @@
             </div>
         </div>
         <div class="hero-visual">
-            <div class="demo-card">
-                <div class="demo-header">
-                    <span class="demo-dot r"></span><span class="demo-dot y"></span><span class="demo-dot g"></span>
+            <div class="screenshot-card">
+                <div class="screenshot-header">
+                    <span class="screenshot-dot r"></span><span class="screenshot-dot y"></span><span class="screenshot-dot g"></span>
+                    <span class="screenshot-title">CadTrans Panel</span>
                 </div>
-                <div class="demo-line">
-                    <span class="demo-flag">🇻🇳</span>
-                    <span class="demo-source">CHI TIẾT TƯỜNG VÂY</span>
-                    <span class="demo-arrow">&rarr;</span>
-                    <span class="demo-target">围墙详图</span>
-                    <span class="demo-tag vi">越→中</span>
-                </div>
-                <div class="demo-line">
-                    <span class="demo-flag">🇮🇩</span>
-                    <span class="demo-source">DETAIL PONDASI</span>
-                    <span class="demo-arrow">&rarr;</span>
-                    <span class="demo-target">基础详图</span>
-                    <span class="demo-tag id">印→中</span>
-                </div>
-                <div class="demo-line">
-                    <span class="demo-flag">🇬🇧</span>
-                    <span class="demo-source">STRUCTURAL PLAN</span>
-                    <span class="demo-arrow">&rarr;</span>
-                    <span class="demo-target">结构平面图</span>
-                    <span class="demo-tag en">英→中</span>
-                </div>
-                <div class="demo-line">
-                    <span class="demo-flag">🇯🇵</span>
-                    <span class="demo-source">平面図 詳細</span>
-                    <span class="demo-arrow">&rarr;</span>
-                    <span class="demo-target">平面图详图</span>
-                    <span class="demo-tag vi">日→中</span>
+                <img src="PUI.jpg" alt="CadTrans插件运行界面" class="screenshot-img">
+                <div class="screenshot-annotations">
+                    <div class="annotation" style="top:8%;left:5%;"><span class="ann-line"></span><span class="ann-label">语言选择</span></div>
+                    <div class="annotation" style="top:35%;right:5%;"><span class="ann-line"></span><span class="ann-label">翻译模式</span></div>
+                    <div class="annotation" style="bottom:30%;left:5%;"><span class="ann-line"></span><span class="ann-label">额度显示</span></div>
+                    <div class="annotation" style="bottom:8%;right:5%;"><span class="ann-line"></span><span class="ann-label">一键翻译</span></div>
                 </div>
             </div>
         </div>
@@ -722,6 +711,18 @@
                 <p>选择文本对象，一键翻译，结果自动写入原文下方</p>
                 <span class="step-cmd">快速翻译 / 完整翻译</span>
             </div>
+        </div>
+        <div class="reveal" style="margin-top:48px;text-align:center;">
+            <div style="display:inline-block;background:var(--deep-800);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.15);position:relative;max-width:600px;width:100%;">
+                <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:#0f172a;">
+                    <span style="width:10px;height:10px;border-radius:50%;background:#ef4444;"></span>
+                    <span style="width:10px;height:10px;border-radius:50%;background:#f59e0b;"></span>
+                    <span style="width:10px;height:10px;border-radius:50%;background:#22c55e;"></span>
+                    <span style="color:rgba(255,255,255,0.4);font-size:0.75rem;margin-left:8px;">CadTrans 运行界面</span>
+                </div>
+                <img src="PUI.jpg" alt="CadTrans插件运行界面截图" style="width:100%;display:block;">
+            </div>
+            <p style="color:var(--deep-400);font-size:0.85rem;margin-top:16px;">CadTrans 非模态面板，在CAD中实时操作</p>
         </div>
     </div>
 </section>
