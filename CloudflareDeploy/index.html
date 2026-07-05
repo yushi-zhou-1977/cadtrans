@@ -6,36 +6,36 @@
     <title>CadTrans - CAD多国语言翻译插件</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        body { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; background: linear-gradient(135deg, #1a3a2a 0%, #2d5a3f 50%, #1a3a2a 100%); min-height: 100vh; }
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         .header { text-align: center; color: white; padding: 60px 20px; }
         .header h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
         .header p { font-size: 1.2rem; opacity: 0.9; }
         .card { background: white; border-radius: 16px; padding: 30px; margin: 20px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
-        .card h2 { color: #333; font-size: 1.5rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #667eea; }
+        .card h2 { color: #1a3a2a; font-size: 1.5rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #c8a45a; }
         .card p { color: #666; line-height: 1.8; margin-bottom: 15px; font-size: 1rem; }
         .feature-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .feature-item { background: #f8f9fa; border-radius: 12px; padding: 25px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; }
+        .feature-item { background: #f5f1ea; border-radius: 12px; padding: 25px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; }
         .feature-item:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .feature-item span { font-size: 3rem; color: #667eea; margin-bottom: 15px; display: block; }
-        .feature-item h3 { color: #333; margin-bottom: 10px; }
+        .feature-item span { font-size: 3rem; color: #2d5a3f; margin-bottom: 15px; display: block; }
+        .feature-item h3 { color: #1a3a2a; margin-bottom: 10px; }
         .feature-item p { color: #666; font-size: 0.9rem; }
         .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .pricing-card { background: white; border-radius: 16px; padding: 40px; text-align: center; position: relative; overflow: hidden; }
-        .pricing-card.best { border: 3px solid #667eea; transform: scale(1.05); }
-        .pricing-card.best .badge { position: absolute; top: 0; right: 0; background: #667eea; color: white; padding: 8px 20px; font-size: 0.8rem; border-radius: 0 0 0 12px; }
-        .pricing-card h3 { font-size: 1.5rem; color: #333; margin-bottom: 10px; }
-        .pricing-card .price { font-size: 3rem; color: #667eea; margin: 20px 0; }
+        .pricing-card.best { border: 3px solid #c8a45a; transform: scale(1.05); }
+        .pricing-card.best .badge { position: absolute; top: 0; right: 0; background: #c8a45a; color: white; padding: 8px 20px; font-size: 0.8rem; border-radius: 0 0 0 12px; }
+        .pricing-card h3 { font-size: 1.5rem; color: #1a3a2a; margin-bottom: 10px; }
+        .pricing-card .price { font-size: 3rem; color: #c8a45a; margin: 20px 0; }
         .pricing-card .price span { font-size: 1rem; color: #999; }
         .pricing-card ul { list-style: none; text-align: left; margin-bottom: 25px; }
         .pricing-card ul li { padding: 10px 0; color: #666; border-bottom: 1px solid #eee; }
         .pricing-card ul li:last-child { border-bottom: none; }
-        .pricing-card ul li::before { content: '✓'; color: #28a745; margin-right: 10px; }
+        .pricing-card ul li::before { content: '✓'; color: #2d5a3f; margin-right: 10px; }
         .btn { display: inline-block; padding: 15px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; text-decoration: none; transition: all 0.3s; }
-        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4); }
-        .btn-outline { border: 2px solid #667eea; color: #667eea; }
-        .btn-outline:hover { background: #667eea; color: white; }
+        .btn-primary { background: linear-gradient(135deg, #c8a45a 0%, #a8883e 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(200, 164, 90, 0.4); }
+        .btn-outline { border: 2px solid #2d5a3f; color: #2d5a3f; }
+        .btn-outline:hover { background: #2d5a3f; color: white; }
         .contact-section { text-align: center; }
         .wechat-qr { display: inline-block; background: white; padding: 20px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); margin-top: 20px; }
         .wechat-qr img { width: 250px; height: 250px; border-radius: 8px; }
@@ -46,7 +46,7 @@
         .admin-link:hover { color: white; }
         .command-box { background: #2d3748; color: #e2e8f0; padding: 15px 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.9rem; margin: 10px 0; }
         .language-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
-        .lang-item { background: #e2e8f0; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; color: #4a5568; }
+        .lang-item { background: #e8f0e8; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; color: #2d5a3f; }
     </style>
 </head>
 <body>
