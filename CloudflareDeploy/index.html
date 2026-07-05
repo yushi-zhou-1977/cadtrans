@@ -544,16 +544,32 @@
         /* ===== FOOTER ===== */
         footer {
             background: var(--deep-800); color: rgba(255,255,255,0.6);
-            padding: 60px 32px 40px; text-align: center;
+            padding: 40px 32px 32px; text-align: center;
         }
-        .footer-logo { font-size: 1.5rem; font-weight: 800; color: white; margin-bottom: 8px; }
+        .footer-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 32px; flex-wrap: wrap;
+        }
+        .footer-logo { font-size: 1.4rem; font-weight: 800; color: white; letter-spacing: -0.03em; }
         .footer-logo span { color: var(--warm-400); }
-        .footer-links { display: flex; gap: 24px; justify-content: center; margin: 20px 0; }
-        .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .footer-links { display: flex; gap: 32px; align-items: center; flex-wrap: wrap; margin: 0; }
+        .footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
         .footer-links a:hover { color: white; }
-        .footer-copy { font-size: 0.8rem; margin-top: 24px; }
-        .admin-link { color: rgba(255,255,255,0.3); font-size: 0.8rem; text-decoration: none; }
-        .admin-link:hover { color: rgba(255,255,255,0.6); }
+        .footer-links a.footer-cta {
+            background: linear-gradient(135deg, var(--warm-400), var(--warm-600));
+            color: white; padding: 8px 20px; border-radius: 10px;
+            font-weight: 700; box-shadow: 0 4px 12px rgba(232,135,58,0.25);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .footer-links a.footer-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(232,135,58,0.4); }
+        .footer-copy { font-size: 0.78rem; margin-top: 24px; color: rgba(255,255,255,0.4); }
+        .admin-link { color: rgba(255,255,255,0.15); font-size: 0.6rem; text-decoration: none; display: inline-block; margin-top: 8px; }
+        .admin-link:hover { color: rgba(255,255,255,0.3); }
+        @media (max-width: 768px) {
+            .footer-inner { flex-direction: column; gap: 20px; }
+            .footer-links { gap: 18px; justify-content: center; }
+        }
 
         /* ===== SCROLL ANIMATIONS ===== */
         .reveal {
@@ -956,13 +972,17 @@
 
 <!-- FOOTER -->
 <footer>
-    <div class="footer-logo">Cad<span>Trans</span></div>
-    <p style="font-size:0.9rem;">CAD多国语言翻译插件</p>
-    <div class="footer-links">
-        <a href="#features">功能</a>
-        <a href="#pricing">价格</a>
-        <a href="#faq">FAQ</a>
-        <a href="#contact">联系</a>
+    <div class="footer-inner">
+        <div class="footer-logo">Cad<span>Trans</span></div>
+        <div class="footer-links">
+            <a href="#features">功能</a>
+            <a href="#languages">语言</a>
+            <a href="#howto">教程</a>
+            <a href="#download-section">下载</a>
+            <a href="#pricing">价格</a>
+            <a href="#faq">FAQ</a>
+            <a href="#cta" class="footer-cta">立即使用</a>
+        </div>
     </div>
     <p class="footer-copy">&copy; 2026 CadTrans. All Rights Reserved.</p>
     <a href="admin.html" class="admin-link">.</a>
